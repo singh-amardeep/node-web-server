@@ -1,21 +1,21 @@
 const express = require("express");
 const hbs = require("hbs"); //handlebarsjs.com // npmjs.com/package/hbs
-const fs = require('fs');
+const fs = require("fs");
 
+const PORT = process.env.PORT || 3000;
 var app = express();
 
 hbs.registerPartials(__dirname + "/views/partials");
 app.set("view engine", "hbs");
 
-
 app.use((req, res, next) => {
   var now = new Date().toString();
   var log = `${now} : ${req.method} ${req.url}`;
   console.log(`${now} : ${req.method} ${req.url}`);
-  fs.appendFile('server.log', log + '\n', (err) => {
-      if(err){
-          console.log('unable to append to server.log');
-      }
+  fs.appendFile("server.log", log + "\n", err => {
+    if (err) {
+      console.log("unable to append to server.log");
+    }
   });
   next();
 });
@@ -53,6 +53,6 @@ app.get("/bad", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server is up in port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is up in port ${PORT}`);
 });
